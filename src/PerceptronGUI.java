@@ -25,7 +25,10 @@ public class PerceptronGUI extends JFrame {
      */
     public PerceptronGUI() {
         setTitle("Perceptron - Comparação de Matrizes");
-        setLayout(new GridLayout(4, 1));
+
+        // Criação de um painel principal com um layout diferente para permitir espaçamento
+        JPanel painelPrincipal = new JPanel();
+        painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
 
         JPanel painelGradeA = new JPanel(new GridLayout(10, 10));
         JPanel painelGradeB = new JPanel(new GridLayout(10, 10));
@@ -35,40 +38,38 @@ public class PerceptronGUI extends JFrame {
         inicializarGrade(painelGradeB, gradeB, matrizB);
         inicializarGrade(painelGradeTest, gradeTest, matrizTest);
 
-        add(new JLabel("Matriz A", SwingConstants.CENTER));
-        add(painelGradeA);
-        add(new JLabel("Matriz B", SwingConstants.CENTER));
-        add(painelGradeB);
-        add(new JLabel("Matriz de Teste", SwingConstants.CENTER));
-        add(painelGradeTest);
+        painelPrincipal.add(new JLabel("Matriz A", SwingConstants.CENTER));
+        painelPrincipal.add(painelGradeA);
+
+        // Adicionando um espaço entre a matriz A e a matriz B
+        painelPrincipal.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        painelPrincipal.add(new JLabel("Matriz B", SwingConstants.CENTER));
+        painelPrincipal.add(painelGradeB);
+
+        // Adicionando um espaço entre a matriz B e a matriz de Teste
+        painelPrincipal.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        painelPrincipal.add(new JLabel("Matriz de Teste", SwingConstants.CENTER));
+        painelPrincipal.add(painelGradeTest);
 
         JPanel painelBotoes = new JPanel();
 
         JButton botaoTreinar = new JButton("Treinar");
-        botaoTreinar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                treinarPerceptron(); // Treinamento do Perceptron
-                JOptionPane.showMessageDialog(null, "Matrizes A e B treinadas!");
-            }
-        });
-
         JButton botaoIdentificar = new JButton("Identificar");
-        botaoIdentificar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                identificarLetra(); // Identificar a letra
-            }
-        });
 
         painelBotoes.add(botaoTreinar);
         painelBotoes.add(botaoIdentificar);
-        add(painelBotoes);
+
+        // Adicionando o painel de botões e o painel principal à janela
+        add(painelPrincipal, BorderLayout.CENTER);
+        add(painelBotoes, BorderLayout.SOUTH);
 
         setSize(600, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
+
 
     /**
      * Inicializa a grade de botões e configura a ação de alternância de pixels.
