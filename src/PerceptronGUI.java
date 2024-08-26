@@ -3,6 +3,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe PerceptronGUI que representa uma interface gráfica para treinar e testar um Perceptron
+ * com duas matrizes de referência e uma matriz de teste.
+ */
 public class PerceptronGUI extends JFrame {
     private JButton[][] gradeA = new JButton[10][10];
     private JButton[][] gradeB = new JButton[10][10];
@@ -16,6 +20,9 @@ public class PerceptronGUI extends JFrame {
     private double bias = 0.0; // Bias do Perceptron
     private final double taxaAprendizagem = 0.1; // Taxa de aprendizagem
 
+    /**
+     * Construtor da classe PerceptronGUI. Configura a interface gráfica e inicializa as matrizes.
+     */
     public PerceptronGUI() {
         setTitle("Perceptron - Comparação de Matrizes");
         setLayout(new GridLayout(4, 1));
@@ -63,6 +70,13 @@ public class PerceptronGUI extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Inicializa a grade de botões e configura a ação de alternância de pixels.
+     *
+     * @param painel O painel que contém a grade de botões.
+     * @param grade  A matriz de botões a ser inicializada.
+     * @param matriz A matriz de inteiros correspondente à grade de botões.
+     */
     private void inicializarGrade(JPanel painel, JButton[][] grade, int[][] matriz) {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -81,6 +95,14 @@ public class PerceptronGUI extends JFrame {
         }
     }
 
+    /**
+     * Alterna o estado do pixel na matriz e altera a cor do botão correspondente.
+     *
+     * @param grade  A matriz de botões.
+     * @param matriz A matriz de inteiros.
+     * @param x      A coordenada x do pixel.
+     * @param y      A coordenada y do pixel.
+     */
     private void alternarPixel(JButton[][] grade, int[][] matriz, int x, int y) {
         if (matriz[x][y] == 0) {
             matriz[x][y] = 1;
@@ -91,9 +113,11 @@ public class PerceptronGUI extends JFrame {
         }
     }
 
-    // Método de treinamento do Perceptron
+    /**
+     * Treina o Perceptron usando as matrizes A e B.
+     * Os pesos e o bias são atualizados para diferenciar as matrizes.
+     */
     private void treinarPerceptron() {
-        // Esperado: 1 para A, -1 para B
         int[][][] entradas = {matrizA, matrizB};
         int[] saidas = {1, -1};
 
@@ -125,7 +149,12 @@ public class PerceptronGUI extends JFrame {
         }
     }
 
-    // Método para calcular a saída do Perceptron
+    /**
+     * Calcula a saída do Perceptron para uma entrada fornecida.
+     *
+     * @param entrada Um vetor de inteiros representando a entrada (matriz achatada).
+     * @return 1 se a saída for positiva, -1 caso contrário.
+     */
     private int calcularSaida(int[] entrada) {
         double soma = bias;
         for (int i = 0; i < 100; i++) {
@@ -134,7 +163,9 @@ public class PerceptronGUI extends JFrame {
         return soma >= 0 ? 1 : -1; // Função de ativação (degrau)
     }
 
-    // Método para identificar a letra com base na matriz de teste
+    /**
+     * Identifica a letra (A ou B) com base na matriz de teste.
+     */
     private void identificarLetra() {
         int[] entradaTeste = new int[100];
         int index = 0;
@@ -148,6 +179,11 @@ public class PerceptronGUI extends JFrame {
         JOptionPane.showMessageDialog(this, "A matriz de teste se parece mais com a letra: " + letraReconhecida);
     }
 
+    /**
+     * Método principal que inicializa a interface gráfica do Perceptron.
+     *
+     * @param args Argumentos da linha de comando (não utilizados).
+     */
     public static void main(String[] args) {
         new PerceptronGUI();
     }
